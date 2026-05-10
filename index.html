@@ -1,1 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>위험성평가 사전교육일지 자동 생성</title>
+    <style>
+        body { font-family: 'Malgun Gothic', sans-serif; padding: 20px; line-height: 1.5; }
+        .container { max-width: 800px; margin: 0 auto; border: 1px solid #000; padding: 30px; }
+        h1 { text-align: center; text-decoration: underline; font-size: 24px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #000; padding: 8px; font-size: 13px; }
+        .input-field { width: 95%; border: none; font-size: 13px; outline: none; }
+        .drop-zone { border: 2px dashed #ccc; padding: 20px; text-align: center; margin-top: 10px; color: #aaa; }
+        .no-print { margin-bottom: 20px; text-align: right; }
+        @media print { .no-print { display: none; } .container { border: none; } }
+    </style>
+</head>
+<body>
 
+<div class="no-print">
+    <button onclick="window.print()">📄 PDF로 저장 / 인쇄</button>
+</div>
+
+<div class="container">
+    <h1>위험성평가 사전교육일지</h1>
+
+    <table>
+        <tr>
+            <th>사업장명</th>
+            <td><input type="text" class="input-field" placeholder="사업장명 입력"></td>
+            <th>교육일자</th>
+            <td><input type="text" class="input-field" value="2026.00.00."></td>
+        </tr>
+        <tr>
+            <th>교육방법</th>
+            <td colspan="3">강의(시청각) □ 현장 □ 기타 □ ( <input type="text" style="width:100px; border:none;"> )</td>
+        </tr>
+        <tr>
+            <th>교육시간</th>
+            <td><input type="text" class="input-field" value="00:00~00:00(1시간)"></td>
+            <th>교육인원</th>
+            <td>계: <input type="text" style="width:30px; border:none;"> 명</td>
+        </tr>
+        <tr>
+            <th>교육장소</th>
+            <td colspan="3"><input type="text" class="input-field" placeholder="장소 입력"></td>
+        </tr>
+    </table>
+
+    <h3>[교육내용]</h3>
+    <div style="border: 1px solid #000; padding: 10px; font-size: 13px;">
+        <ul>
+            <li>○ 위험성평가를 위한 사업주의 방침과 추진목표</li>
+            <li>○ 위험성평가를 위한 사전준비 및 유해 위험요인 파악 방법</li>
+            <li>○ 유해 위험요인에 대한 위험성 결정방법</li>
+            <li>○ 위험성 감소대책 수립 및 실행의 절차와 기록유지 방법</li>
+        </ul>
+    </div>
+
+    <h3>[참석자 명단]</h3>
+    <table>
+        <tr>
+            <th>연번</th><th>성명</th><th>서명</th>
+            <th>연번</th><th>성명</th><th>서명</th>
+        </tr>
+        <script>
+            for(let i=1; i<=10; i++) {
+                document.write(`<tr>
+                    <td>${i}</td><td><input type="text" class="input-field"></td><td></td>
+                    <td>${i+10}</td><td><input type="text" class="input-field"></td><td></td>
+                </tr>`);
+            }
+        </script>
+    </table>
+
+    <div class="drop-zone" id="dropZone">
+        📷 교육 사진을 여기에 드래그하거나 클릭해서 첨부하세요.
+        <input type="file" id="fileInput" style="display:none" accept="image/*">
+        <div id="preview"></div>
+    </div>
+</div>
+
+<script>
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const preview = document.getElementById('preview');
+
+    dropZone.onclick = () => fileInput.click();
+    dropZone.ondragover = (e) => { e.preventDefault(); dropZone.style.backgroundColor = '#f0f0f0'; };
+    dropZone.ondragleave = () => { dropZone.style.backgroundColor = 'transparent'; };
+    dropZone.ondrop = (e) => {
+        e.preventDefault();
+        const files = e.dataTransfer.files;
+        handleFiles(files);
+    };
+
+    fileInput.onchange = (e) => handleFiles(e.target.files);
+
+    function handleFiles(files) {
+        if (files.length > 0) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.innerHTML = `<img src="${e.target.result}" style="max-width:100%; margin-top:10px;">`;
+                dropZone.innerText = "";
+                dropZone.appendChild(preview);
+            };
+            reader.readAsDataURL(files[0]);
+        }
+    }
+</script>
+
+</body>
+</html>
