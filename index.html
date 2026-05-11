@@ -7,13 +7,13 @@
         body { font-family: 'Malgun Gothic', sans-serif; background-color: #f4f7f9; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
         
         /* [1페이지] 선택 화면 */
-        #selection-page { display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; text-align: center; }
-        .logo-area { margin-bottom: 40px; }
-        .logo-main { font-size: 36px; font-weight: bold; color: #0066ff; letter-spacing: 1px; }
-        .logo-sub { font-size: 20px; color: #333; margin-top: 10px; font-weight: bold; }
-        .select-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); width: 450px; }
-        .card-title { font-size: 18px; margin-bottom: 20px; color: #444; font-weight: bold; }
-        .styled-select { width: 100%; padding: 15px; font-size: 16px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 25px; background: #fff; }
+        #selection-page { display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; text-align: center; padding: 20px; }
+        .logo-area { margin-bottom: 30px; }
+        .logo-main { font-size: 32px; font-weight: bold; color: #0066ff; letter-spacing: 1px; }
+        .logo-sub { font-size: 18px; color: #333; margin-top: 5px; font-weight: bold; }
+        .select-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); width: 100%; max-width: 500px; }
+        .card-title { font-size: 17px; margin-bottom: 20px; color: #444; font-weight: bold; }
+        .styled-select { width: 100%; padding: 12px; font-size: 15px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 25px; background: #fff; max-height: 200px; }
         .start-btn { width: 100%; padding: 15px; background: #0052cc; color: white; border: none; border-radius: 10px; font-size: 17px; font-weight: bold; cursor: pointer; }
 
         /* [2페이지] 일지 화면 */
@@ -28,7 +28,7 @@
         th, td { border: 1px solid #333; padding: 10px; text-align: center; font-size: 14px; }
         th { background-color: #f9f9f9; font-weight: bold; }
         input { width: 95%; border: 1px solid #eee; padding: 5px; font-size: 14px; text-align: center; font-family: inherit; }
-        .content-box { border: 2px solid #333; padding: 20px; text-align: left; font-size: 14px; margin: 20px 0; }
+        .content-box { border: 2px solid #333; padding: 20px; text-align: left; font-size: 14px; margin: 20px 0; line-height: 1.6; }
 
         @media print {
             .no-print { display: none !important; }
@@ -46,134 +46,43 @@
         <div class="logo-sub">안전보건 관리 시스템</div>
     </div>
     <div class="select-card">
-        <div class="card-title">담당 사업장을 선택하세요</div>
+        <div class="card-title">담당 사업장을 선택하세요 (총 53개소)</div>
         <select id="siteInput" class="styled-select">
             <option value="">-- 사업장 목록 선택 --</option>
-            <option value="SK-C타워">SK-C타워</option>
-            <option value="SK-V1(당산)">SK-V1(당산)</option>
-            <option value="SK-서린빌딩">SK-서린빌딩</option>
-            <option value="SK-T타워">SK-T타워</option>
-            <option value="SK-남산빌딩">SK-남산빌딩</option>
-            <option value="SK-내수빌딩">SK-내수빌딩</option>
-            <option value="SK-G.plant">SK-G.plant</option>
-            <option value="SK-u.tower">SK-u.tower</option>
-            <option value="SK-백암센터">SK-백암센터</option>
-            <option value="SK-판교캠퍼스">SK-판교캠퍼스</option>
-            <option value="SK-실트론">SK-실트론</option>
-            <option value="나래에너지서비스">나래에너지서비스</option>
-        </select>
-        <button class="start-btn" onclick="goToReport()">교육일지 작성하기</button>
-    </div>
-</div>
-
-<div id="report-page">
-    <div class="no-print">
-        <button class="back-btn" onclick="goToStart()">◀ 이전으로</button>
-        <button class="print-btn" onclick="window.print()">📄 PDF 저장 / 출력</button>
-    </div>
-
-    <div class="container">
-        <h1>위험성평가 사전교육일지</h1>
-        <table>
-            <tr>
-                <th style="width:15%">사업장명</th>
-                <td id="targetSite" style="width:35%; font-weight:bold; font-size: 16px;"></td>
-                <th style="width:15%">교육방법</th>
-                <td style="width:35%; text-align:left;">
-                    ■ 강의(시청각) ■ 현장 □ 기타( )
-                </td>
-            </tr>
-            <tr>
-                <th>교육일자</th>
-                <td><input type="date" id="eduDate"></td>
-                <th>교육시간</th>
-                <td><input type="text" placeholder="00:00~00:00"></td>
-            </tr>
-        </table>
-
-        <table>
-            <tr>
-                <th rowspan="3" style="width:15%">교육인원</th>
-                <th style="width:15%">구 분</th>
-                <th style="width:15%">계</th>
-                <th style="width:15%">남</th>
-                <th style="width:15%">여</th>
-                <th rowspan="2">교육 미참석 사유</th>
-            </tr>
-            <tr>
-                <td>교육 대상자 수</td>
-                <td><input type="number"></td>
-                <td><input type="number"></td>
-                <td><input type="number"></td>
-            </tr>
-            <tr>
-                <td>교육 실시자 수</td>
-                <td><input type="number"></td>
-                <td><input type="number"></td>
-                <td><input type="number"></td>
-                <td><input type="text"></td>
-            </tr>
-            <tr>
-                <th rowspan="2">교육실시자</th>
-                <th>담당자명</th>
-                <td colspan="2"><input type="text"></td>
-                <th rowspan="2">교육장소</th>
-                <td rowspan="2"><input type="text"></td>
-            </tr>
-            <tr>
-                <th>직책</th>
-                <td colspan="2"><input type="text"></td>
-            </tr>
-        </table>
-
-        <div class="content-box">
-            <strong>[교육내용]</strong><br><br>
-            ○ 「위험성평가」를 위한 사업주의 방침과 추진목표<br>
-            ○ 「위험성평가」를 위한 사전준비 및 유해 위험요인 파악 방법<br>
-            ○ 유해 위험요인에 대한 위험성 결정방법<br>
-            ○ 위험성 감소대책 수립 및 실행의 절차와 기록유지 방법
-        </div>
-
-        <div style="text-align:center; font-weight:bold; margin-bottom:10px;">&lt; 참석자 명단 &gt;</div>
-        <table>
-            <thead>
-                <tr>
-                    <th style="width:50px">연번</th><th>직종</th><th>성명</th><th style="width:100px">서명</th>
-                    <th style="width:50px">연번</th><th>직종</th><th>성명</th><th style="width:100px">서명</th>
-                </tr>
-            </thead>
-            <tbody id="nameList"></tbody>
-        </table>
-    </div>
-</div>
-
-<script>
-    function goToReport() {
-        const siteVal = document.getElementById('siteInput').value;
-        if (!siteVal) {
-            alert("사업장을 선택해 주세요!");
-            return;
-        }
-        document.getElementById('targetSite').innerText = siteVal;
-        document.getElementById('selection-page').style.display = 'none';
-        document.getElementById('report-page').style.display = 'block';
-        document.getElementById('eduDate').value = new Date().toISOString().substring(0, 10);
-    }
-
-    function goToStart() {
-        document.getElementById('selection-page').style.display = 'flex';
-        document.getElementById('report-page').style.display = 'none';
-    }
-
-    const listArea = document.getElementById('nameList');
-    for (let i = 1; i <= 10; i++) {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${i}</td><td><input type="text" style="border:none;"></td><td><input type="text" style="border:none;"></td><td></td>
-            <td>${i+10}</td><td><input type="text" style="border:none;"></td><td><input type="text" style="border:none;"></td><td></td>
-        `;
-        listArea.appendChild(tr);
-    }
-</script>
-</body>
-</html>
+            <option value="아시아나 인천캐빈지원">아시아나 인천캐빈지원</option>
+            <option value="㈜신동진 효성반포빌딩">㈜신동진 효성반포빌딩</option>
+            <option value="공덕개발㈜ 효성공덕빌딩">공덕개발㈜ 효성공덕빌딩</option>
+            <option value="효성첨단소재㈜등촌동빌딩">효성첨단소재㈜등촌동빌딩</option>
+            <option value="효성토요타(서초지점)">효성토요타(서초지점)</option>
+            <option value="유씨케이파트너스">유씨케이파트너스</option>
+            <option value="용인 세브란스병원">용인 세브란스병원</option>
+            <option value="용인 세브란스병원 장례식장">용인 세브란스병원 장례식장</option>
+            <option value="원주기독병원">원주기독병원</option>
+            <option value="라까사호텔(FM)">라까사호텔(FM)</option>
+            <option value="라까사호텔룸메이드(FM)">라까사호텔룸메이드(FM)</option>
+            <option value="라까사호텔서울(FM)">라까사호텔서울(FM)</option>
+            <option value="KCB빌딩">KCB빌딩</option>
+            <option value="젠스타메이트-에스타워">젠스타메이트-에스타워</option>
+            <option value="SK-C">SK-C</option>
+            <option value="상제리제센터">상제리제센터</option>
+            <option value="연세동문회관(FM)">연세동문회관(FM)</option>
+            <option value="초동오피스(FM)">초동오피스(FM)</option>
+            <option value="에스원프로젝트107(FM)">에스원프로젝트107(FM)</option>
+            <option value="한국은행 경기본부">한국은행 경기본부</option>
+            <option value="세브란스 시설">세브란스 시설</option>
+            <option value="당산skv1">당산skv1</option>
+            <option value="유한대학교">유한대학교</option>
+            <option value="이투스 본사">이투스 본사</option>
+            <option value="청솔학원 부천지점">청솔학원 부천지점</option>
+            <option value="청솔학원 평촌지점 (독서실)">청솔학원 평촌지점 (독서실)</option>
+            <option value="청솔학원 일산지점">청솔학원 일산지점</option>
+            <option value="청솔학원 분당지점">청솔학원 분당지점</option>
+            <option value="청솔학원 노원지점">청솔학원 노원지점</option>
+            <option value="강남하이퍼이과">강남하이퍼이과</option>
+            <option value="ICT폴리텍">ICT폴리텍</option>
+            <option value="더클래스효성(강남대로지점)">더클래스효성(강남대로지점)</option>
+            <option value="더클래스효성(도곡 서비스센터)">더클래스효성(도곡 서비스센터)</option>
+            <option value="더클래스효성(신사 서비스센터)">더클래스효성(신사 서비스센터)</option>
+            <option value="더클래스효성(송파전시장)">더클래스효성(송파전시장)</option>
+            <option value="더클래스효성(안양평촌 전시장)">더클래스효성(안양평촌 전시장)</option>
+            <option value="더클래스효성(안양평촌 서비스센터)">더클래스효성(안양평촌 서비스센터)</option>
