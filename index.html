@@ -2,78 +2,36 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>윌앤비전 안전관리 시스템</title>
     <style>
         body { font-family: 'Malgun Gothic', sans-serif; background-color: #f4f7f9; margin: 0; padding: 0; }
         
-        /* [첫 화면] 사업장 선택 섹션 */
+        /* 첫 화면: 사업장 선택 */
         #selection-page { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center; }
-        .logo { font-size: 28px; font-weight: bold; color: #007bff; margin-bottom: 30px; }
         .select-card { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 400px; }
-        .select-card h2 { margin-bottom: 20px; font-size: 18px; color: #555; }
-        .styled-select { width: 100%; padding: 12px; font-size: 16px; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 20px; outline: none; }
-        .start-btn { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .start-btn:hover { background: #0056b3; }
+        .styled-select { width: 100%; padding: 12px; font-size: 16px; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 20px; }
+        .start-btn { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
 
-        /* [메인 화면] 교육일지 작성 섹션 */
+        /* 메인 화면: 교육일지 */
         #report-page { display: none; padding: 20px; }
-        .container { max-width: 850px; margin: 0 auto; border: 1px solid #000; padding: 40px; background: #fff; position: relative; }
+        .container { max-width: 850px; margin: 0 auto; border: 1px solid #000; padding: 40px; background: #fff; }
         
         .no-print { display: flex; justify-content: space-between; max-width: 850px; margin: 0 auto 20px auto; }
         .back-btn { background: #6c757d; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; }
         .print-btn { background: #28a745; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; font-weight: bold; }
 
-        /* 테이블 스타일 */
         h1 { text-align: center; text-decoration: underline; margin-bottom: 30px; }
         table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
-        th, td { border: 1px solid #000; padding: 10px; text-align: center; font-size: 14px; }
+        th, td { border: 1px solid #000; padding: 10px; text-align: center; font-size: 14px; height: 25px; }
         th { background-color: #f2f2f2; width: 120px; }
         
-        input, select { width: 95%; padding: 5px; border: 1px solid #ddd; border-radius: 4px; }
+        input { width: 95%; border: 1px solid #eee; padding: 5px; font-family: inherit; }
         .content-box { border: 1px solid #000; padding: 15px; text-align: left; font-size: 14px; margin-bottom: 20px; }
-        
+
+        /* 인쇄 설정 */
         @media print {
-            .no-print { display: none; }
+            .no-print { display: none !important; }
             body { background: none; }
-            .container { border: none; width: 100%; padding: 0; }
-        }
-    </style>
-</head>
-<body>
-
-<div id="selection-page">
-    <div class="logo">WILL & VISION <br><span style="font-size: 18px; color: #333;">안전보건 관리 시스템</span></div>
-    <div class="select-card">
-        <h2>담당 사업장을 선택하세요</h2>
-        <select id="siteInput" class="styled-select">
-            <option value="">-- 사업장 목록 --</option>
-            <option value="SK-C타워">SK-C타워</option>
-            <option value="윌앤비전 본사">윌앤비전 본사</option>
-            <option value="영등포 사업장">영등포 사업장</option>
-            <option value="당산동 관리단지">당산동 관리단지</option>
-        </select>
-        <button class="start-btn" onclick="startApp()">교육일지 작성하기</button>
-    </div>
-</div>
-
-<div id="report-page">
-    <div class="no-print">
-        <button class="back-btn" onclick="goBack()">◀ 사업장 다시 선택</button>
-        <button class="print-btn" onclick="window.print()">📄 PDF 저장 / 출력</button>
-    </div>
-
-    <div class="container">
-        <h1>위험성평가 사전교육일지</h1>
-        <table>
-            <tr>
-                <th>사업장명</th>
-                <td id="targetSiteName" style="font-weight:bold; font-size: 16px;"></td>
-                <th>교육일자</th>
-                <td><input type="date" id="eduDate"></td>
-            </tr>
-            <tr>
-                <th>교육방법</th>
-                <td colspan="3" style="text-align:left; padding-left:20px;">
-                    <input type="checkbox"> 강의(시청각) &nbsp; <input type="checkbox"> 현장 &nbsp; <input type="checkbox"> 기타 (<input type="text" style="width:100px; border:none; border-bottom:1px solid #000;">)
-                </td>
+            .container { border: none !important; width: 100%; padding: 0; margin: 0; }
+            input { border: none !important; } /* 인쇄 시 테두리 제거 */
+            #targetSiteName { color: black !important; font-weight
