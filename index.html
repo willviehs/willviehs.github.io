@@ -10,19 +10,16 @@
         #selection-page { display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; padding: 20px; }
         .logo-area { margin-bottom: 40px; text-align: center; }
         .logo-main { font-size: 38px; font-weight: bold; color: #0052cc; letter-spacing: 2px; }
-        .logo-sub { font-size: 18px; color: #555; margin-top: 8px; font-weight: bold; letter-spacing: 1px; }
+        .logo-sub { font-size: 18px; color: #555; margin-top: 8px; font-weight: bold; }
         
         .select-card { background: white; padding: 50px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); width: 100%; max-width: 480px; text-align: center; }
         .card-title { font-size: 19px; margin-bottom: 30px; color: #333; font-weight: bold; }
         
-        /* 드롭다운 스타일 개선 */
         .styled-select { 
             width: 100%; padding: 15px; font-size: 16px; border: 2px solid #e1e4e8; border-radius: 12px; 
-            margin-bottom: 30px; background: #f8f9fa; cursor: pointer; outline: none; transition: 0.3s;
+            margin-bottom: 30px; background: #f8f9fa; cursor: pointer; outline: none;
         }
-        .styled-select:focus { border-color: #0052cc; background: #fff; }
         
-        /* 강조된 파란색 버튼 */
         .start-btn { 
             width: 100%; padding: 18px; background: #0052cc; color: white; border: none; 
             border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; 
@@ -32,23 +29,29 @@
 
         /* [2페이지] 일지 화면 */
         #report-page { display: none; padding: 30px; background-color: #f4f7f9; }
-        .container { max-width: 850px; margin: 0 auto; border: 2px solid #333; padding: 40px; background: #fff; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        .container { max-width: 850px; margin: 0 auto; border: 2px solid #333; padding: 40px; background: #fff; }
         .no-print { display: flex; justify-content: space-between; max-width: 850px; margin: 0 auto 25px auto; }
         .back-btn { background: #fff; color: #555; border: 1px solid #ddd; padding: 10px 20px; cursor: pointer; border-radius: 8px; font-weight: bold; }
         .print-btn { background: #0052cc; color: white; border: none; padding: 10px 25px; cursor: pointer; border-radius: 8px; font-weight: bold; }
 
-        /* 표 서식 */
+        /* 서식 스타일 */
         h1 { text-align: center; text-decoration: underline; margin-bottom: 30px; font-size: 26px; }
         table { width: 100%; border-collapse: collapse; margin-bottom: -1px; }
         th, td { border: 1px solid #333; padding: 10px; text-align: center; font-size: 14px; }
         th { background-color: #f9f9f9; font-weight: bold; }
-        input { width: 95%; border: none; padding: 5px; font-size: 14px; text-align: center; background: transparent; }
+        
+        /* 입력창 스타일 */
+        input[type="text"], input[type="number"], input[type="date"], input[type="time"] { 
+            width: 90%; border: none; padding: 5px; font-size: 14px; text-align: center; background: transparent; outline: none;
+        }
+        input[type="checkbox"] { transform: scale(1.2); cursor: pointer; vertical-align: middle; }
         .content-box { border: 2px solid #333; padding: 20px; text-align: left; font-size: 14px; margin: 20px 0; line-height: 1.7; }
 
         @media print {
             .no-print { display: none !important; }
             body { background: white; }
             .container { border: none !important; width: 100%; padding: 0; box-shadow: none; }
+            input::-webkit-calendar-picker-indicator { display: none; } /* 인쇄 시 화살표 등 제거 */
         }
     </style>
 </head>
@@ -134,15 +137,17 @@
                 <th style="width:15%">사업장명</th>
                 <td id="targetSite" style="width:35%; font-weight:bold; font-size: 16px;"></td>
                 <th style="width:15%">교육방법</th>
-                <td style="width:35%; text-align:left;">
-                    ■ 강의(시청각) ■ 현장 □ 기타( )
+                <td style="width:35%; text-align:left; padding-left:15px;">
+                    <input type="checkbox"> 강의(시청각) &nbsp; 
+                    <input type="checkbox"> 현장 &nbsp; 
+                    <input type="checkbox"> 기타(<input type="text" style="width:50px; border-bottom:1px solid #000; text-align:left;">)
                 </td>
             </tr>
             <tr>
                 <th>교육일자</th>
                 <td><input type="date" id="eduDate"></td>
                 <th>교육시간</th>
-                <td><input type="text" placeholder="00:00~00:00"></td>
+                <td><input type="time" style="width:40%"> ~ <input type="time" style="width:40%"></td>
             </tr>
         </table>
 
