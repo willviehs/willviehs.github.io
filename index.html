@@ -2,98 +2,136 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>WILL & VISION 안전보건 관리 시스템</title>
+    <title>WILL & VISION 통합 안전관리 시스템</title>
     <style>
-        /* 기본 설정 */
-        body { font-family: 'Malgun Gothic', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; }
+        body { font-family: 'Malgun Gothic', sans-serif; display: flex; margin: 0; background-color: #f0f2f5; height: 100vh; overflow: hidden; }
         
-        /* [1페이지] 사업장 선택 화면 - 파란 버튼 복구 */
-        #selection-page { 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            min-height: 100vh; background-color: #f0f2f5; 
-        }
-        .logo-area { text-align: center; margin-bottom: 30px; }
-        .logo-main { font-size: 38px; font-weight: bold; color: #0052cc; letter-spacing: 2px; }
-        .logo-sub { font-size: 18px; color: #555; margin-top: 8px; font-weight: bold; }
-        
-        .select-card { 
-            background: white; padding: 50px; border-radius: 24px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1); width: 450px; text-align: center; 
-        }
-        .styled-select { 
-            width: 100%; padding: 15px; font-size: 16px; border: 2px solid #e1e4e8; 
-            border-radius: 12px; margin-bottom: 30px; outline: none;
-        }
-        /* 파란색 시작 버튼 */
-        .start-btn { 
-            width: 100%; padding: 18px; background: #0052cc; color: white; border: none; 
-            border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; 
-            transition: 0.3s;
-        }
-        .start-btn:hover { background: #0041a3; }
+        /* 왼쪽 카테고리 메뉴 */
+        .sidebar { width: 250px; background-color: #002b5c; color: white; display: flex; flex-direction: column; padding: 20px 0; }
+        .sidebar-header { text-align: center; font-weight: bold; font-size: 20px; margin-bottom: 30px; line-height: 1.4; }
+        .menu-item { padding: 15px 25px; cursor: pointer; transition: 0.3s; font-size: 15px; border-left: 4px solid transparent; }
+        .menu-item:hover { background-color: #0041a3; }
+        .menu-item.active { background-color: #0041a3; border-left: 4px solid #fff; font-weight: bold; }
 
-        /* [2페이지] 일지 작성 화면 */
-        #report-page { display: none; padding: 20px 0; }
-        .no-print { display: flex; justify-content: space-between; width: 190mm; margin: 0 auto 10px auto; }
-        .back-btn { background: #fff; border: 1px solid #ccc; padding: 8px 15px; cursor: pointer; border-radius: 6px; }
+        /* 오른쪽 메인 콘텐츠 영역 */
+        .main-content { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; }
+        
+        /* 초기 선택 화면 */
+        #selection-page { display: flex; flex-grow: 1; flex-direction: column; align-items: center; justify-content: center; }
+        .select-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 400px; text-align: center; }
+        .styled-select { width: 100%; padding: 12px; font-size: 15px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 20px; }
+        .start-btn { width: 100%; padding: 15px; background: #0052cc; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+
+        /* 서류 작성 영역 */
+        #report-area { display: none; padding: 20px; }
+        .no-print { display: flex; justify-content: flex-end; width: 190mm; margin: 0 auto 10px auto; }
         .print-btn { background: #0052cc; color: white; border: none; padding: 8px 25px; cursor: pointer; border-radius: 6px; font-weight: bold; }
 
-        /* A4 컨테이너 */
-        .container { 
-            width: 210mm; min-height: 297mm; margin: 0 auto; padding: 15mm 20mm; 
-            background: #fff; box-sizing: border-box; 
-        }
-
-        h1 { text-align: center; text-decoration: underline; margin: 0 0 20px 0; font-size: 24px; }
-        
-        /* 테이블 선 일직선 정렬 */
+        /* A4 규격 */
+        .container { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 15mm 20mm; background: #fff; box-sizing: border-box; }
+        h1 { text-align: center; text-decoration: underline; margin-bottom: 20px; font-size: 24px; }
         table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-bottom: -1px; }
-        th, td { border: 1px solid #000; padding: 8px 5px; text-align: center; font-size: 13px; height: 25px; }
-        th { background-color: #f2f2f2; font-weight: bold; }
-        
+        th, td { border: 1px solid #000; padding: 6px; text-align: center; font-size: 13px; }
+        th { background-color: #f2f2f2; }
         input { width: 95%; border: none; font-size: 13px; text-align: center; background: transparent; outline: none; }
-        input[type="checkbox"] { transform: scale(1.1); vertical-align: middle; }
-        
-        .content-box { 
-            border: 1px solid #000; padding: 15px; font-size: 13px; 
-            margin: 20px 0; line-height: 1.6; text-align: left; 
-        }
 
         @media print {
-            @page { size: A4; margin: 0; }
-            body { background: none; }
-            .no-print { display: none !important; }
-            .container { width: 210mm; height: 297mm; padding: 15mm 20mm; border: none !important; margin: 0; }
+            .sidebar, .no-print { display: none !important; }
+            body { background: none; overflow: visible; }
+            .main-content { overflow: visible; }
+            .container { border: none; width: 210mm; height: 297mm; padding: 15mm 20mm; margin: 0; }
         }
     </style>
 </head>
 <body>
 
-<div id="selection-page">
-    <div class="logo-area">
-        <div class="logo-main">WILL & VISION</div>
-        <div class="logo-sub">안전보건 관리 시스템</div>
+    <div class="sidebar">
+        <div class="sidebar-header">WILL & VISION<br>안전관리 시스템</div>
+        <div class="menu-item active" onclick="switchForm('edu')">위험성평가 교육일지</div>
+        <div class="menu-item" onclick="switchForm('risk')">위험성평가표</div>
+        <div class="menu-item" onclick="switchForm('check')">일상 점검표</div>
+        <div class="menu-item" onclick="switchForm('tbm')">TBM 기록부</div>
     </div>
-    <div class="select-card">
-        <div style="font-size:18px; font-weight:bold; margin-bottom:20px;">사업장을 선택해 주세요</div>
-        <select id="siteInput" class="styled-select">
-            <option value="">-- 사업장 목록 --</option>
-            <option value="아시아나 인천캐빈지원">아시아나 인천캐빈지원</option>
-            <option value="㈜신동진 효성반포빌딩">㈜신동진 효성반포빌딩</option>
-            <option value="공덕개발㈜ 효성공덕빌딩">공덕개발㈜ 효성공덕빌딩</option>
-            <option value="효성첨단소재㈜등촌동빌딩">효성첨단소재㈜등촌동빌딩</option>
-            <option value="효성토요타(서초지점)">효성토요타(서초지점)</option>
-            <option value="유씨케이파트너스">유씨케이파트너스</option>
-            <option value="용인 세브란스병원">용인 세브란스병원</option>
-            <option value="용인 세브란스병원 장례식장">용인 세브란스병원 장례식장</option>
-            <option value="원주기독병원">원주기독병원</option>
-            <option value="라까사호텔(FM)">라까사호텔(FM)</option>
-            <option value="KCB빌딩">KCB빌딩</option>
-            <option value="상제리제센터">상제리제센터</option>
-            <option value="당산skv1">당산skv1</option>
-            <option value="디씨티㈜">디씨티㈜</option>
-            <option value="DM스퀘어">DM스퀘어</option>
-        </select>
-        <button class="start-btn" onclick="goToReport()">교육일지 작성하기</button>
+
+    <div class="main-content">
+        <div id="selection-page">
+            <div class="select-card">
+                <div style="font-size:18px; font-weight:bold; margin-bottom:20px;">사업장을 선택해 주세요</div>
+                <select id="siteInput" class="styled-select">
+                    <option value="">-- 사업장 목록 --</option>
+                    <option value="아시아나 인천캐빈지원">아시아나 인천캐빈지원</option>
+                    <option value="SK-C">SK-C</option>
+                    <option value="상제리제센터">상제리제센터</option>
+                    <option value="당산skv1">당산skv1</option>
+                    <option value="㈜신동진 효성반포빌딩">㈜신동진 효성반포빌딩</option>
+                    </select>
+                <button class="start-btn" onclick="initApp()">시스템 접속하기</button>
+            </div>
+        </div>
+
+        <div id="report-area">
+            <div class="no-print">
+                <button class="print-btn" onclick="window.print()">📄 PDF 저장 / 출력</button>
+            </div>
+            
+            <div class="container" id="form-container">
+                <h1 id="form-title">위험성평가 사전교육일지</h1>
+                <div id="dynamic-form">
+                    </div>
+            </div>
+        </div>
     </div>
-</div>
+
+    <script>
+        let currentSite = "";
+
+        function initApp() {
+            const site = document.getElementById('siteInput').value;
+            if(!site) { alert("사업장을 선택하세요!"); return; }
+            currentSite = site;
+            document.getElementById('selection-page').style.display = 'none';
+            document.getElementById('report-area').style.display = 'block';
+            switchForm('edu'); // 초기 화면은 교육일지
+        }
+
+        function switchForm(type) {
+            if(!currentSite) return;
+            
+            // 메뉴 활성화 표시
+            const items = document.querySelectorAll('.menu-item');
+            items.forEach(i => i.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            const content = document.getElementById('dynamic-form');
+            const title = document.getElementById('form-title');
+
+            if(type === 'edu') {
+                title.innerText = "위험성평가 사전교육일지";
+                content.innerHTML = `
+                    <table>
+                        <tr>
+                            <th style="width:15%">사업장명</th><td style="width:35%; font-weight:bold;">${currentSite}</td>
+                            <th style="width:15%">교육방법</th><td style="text-align:left; padding-left:15px;"><input type="checkbox"> 강의 <input type="checkbox"> 현장</td>
+                        </tr>
+                        <tr>
+                            <th>교육일자</th><td><input type="date" value="${new Date().toISOString().substring(0, 10)}"></td>
+                            <th>교육시간</th><td><input type="time"> ~ <input type="time"></td>
+                        </tr>
+                    </table>
+                    `;
+            } else if(type === 'risk') {
+                title.innerText = "위험성평가표";
+                content.innerHTML = `
+                    <p style="text-align:right;">사업장: ${currentSite}</p>
+                    <table>
+                        <tr><th>작업공정</th><th>유해위험요인</th><th>감소대책</th><th>담당자</th></tr>
+                        <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+                        <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+                    </table>
+                `;
+            }
+            // 다른 카테고리 양식도 이어서 추가 가능
+        }
+    </script>
+</body>
+</html>
