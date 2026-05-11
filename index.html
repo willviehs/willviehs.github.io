@@ -63,4 +63,119 @@
 
 <div id="report-page">
     <div class="no-print">
-        <button class="back-btn" onclick="goToStart()">◀ 이전으로</button
+        <button class="back-btn" onclick="goToStart()">◀ 이전으로</button>
+        <button class="print-btn" onclick="window.print()">📄 PDF 저장 / 출력</button>
+    </div>
+
+    <div class="container">
+        <h1>위험성평가 사전교육일지</h1>
+        <table>
+            <tr>
+                <th style="width:15%">사업장명</th>
+                <td id="targetSite" style="width:35%; font-weight:bold; font-size: 16px;"></td>
+                <th style="width:15%">교육방법</th>
+                <td style="width:35%; text-align:left;">
+                    ■ 강의(시청각) ■ 현장 □ 기타( )
+                </td>
+            </tr>
+            <tr>
+                <th>교육일자</th>
+                <td><input type="date" id="eduDate"></td>
+                <th>교육시간</th>
+                <td><input type="time"> ~ <input type="time"></td>
+            </tr>
+        </table>
+
+        <table style="margin-top:-1px;">
+            <tr>
+                <th rowspan="3" style="width:15%">교육인원</th>
+                <th style="width:15%">구 분</th>
+                <th style="width:15%">계</th>
+                <th style="width:15%">남</th>
+                <th style="width:15%">여</th>
+                <th rowspan="2">교육 미참석 사유</th>
+            </tr>
+            <tr>
+                <td>교육 대상자 수</td>
+                <td><input type="number"></td>
+                <td><input type="number"></td>
+                <td><input type="number"></td>
+            </tr>
+            <tr>
+                <td>교육 실시자 수</td>
+                <td><input type="number"></td>
+                <td><input type="number"></td>
+                <td><input type="number"></td>
+                <td><input type="text" style="width:90%"></td>
+            </tr>
+            <tr>
+                <th rowspan="2">교육실시자</th>
+                <th>담당자명</th>
+                <td colspan="2"><input type="text"></td>
+                <th rowspan="2">교육장소</th>
+                <td rowspan="2"><input type="text"></td>
+            </tr>
+            <tr>
+                <th>직책</th>
+                <td colspan="2"><input type="text"></td>
+            </tr>
+        </table>
+
+        <div class="content-box">
+            <div style="margin-bottom:10px; font-weight:bold;">[교육내용]</div>
+            ○ 「위험성평가」를 위한 사업주의 방침과 추진목표<br>
+            ○ 「위험성평가」를 위한 사전준비 및 유해 위험요인 파악 방법<br>
+            ○ 유해 위험요인에 대한 위험성 결정방법<br>
+            ○ 위험성 감소대책 수립 및 실행의 절차와 기록유지 방법
+        </div>
+
+        <div style="text-align:center; font-weight:bold; margin-bottom:10px;">&lt; 참석자 명단 &gt;</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>연번</th><th>직종</th><th>성명</th><th>서명</th>
+                    <th>연번</th><th>직종</th><th>성명</th><th>서명</th>
+                </tr>
+            </thead>
+            <tbody id="nameList"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // 페이지 전환 함수
+    function goToReport() {
+        const siteVal = document.getElementById('siteInput').value;
+        if (!siteVal) {
+            alert("사업장을 선택해 주세요!");
+            return;
+        }
+
+        // 값 전달 및 화면 전환
+        document.getElementById('targetSite').innerText = siteVal;
+        document.getElementById('selection-page').style.display = 'none';
+        document.getElementById('report-page').style.display = 'block';
+        
+        // 날짜 오늘로 초기화
+        document.getElementById('eduDate').value = new Date().toISOString().substring(0, 10);
+    }
+
+    function goToStart() {
+        document.getElementById('selection-page').style.display = 'flex';
+        document.getElementById('report-page').style.display = 'none';
+    }
+
+    // 명단 생성
+    const listArea = document.getElementById('nameList');
+    for (let i = 1; i <= 10; i++) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${i}</td><td><input type="text" style="border:none;"></td><td><input type="text" style="border:none;"></td><td></td>
+            <td>${i+10}</td><td><input type="text" style="border:none;"></td><td><input type="text" style="border:none;"></td><td></td>
+        `;
+        listArea.appendChild(tr);
+    }
+</script>
+
+</body>
+</html>
