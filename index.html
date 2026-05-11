@@ -2,36 +2,65 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>윌앤비전 안전관리 시스템</title>
+    <title>WILL & VISION 안전보건 관리 시스템</title>
     <style>
-        body { font-family: 'Malgun Gothic', sans-serif; background-color: #f4f7f9; margin: 0; padding: 0; }
+        /* 기본 스타일 */
+        body { font-family: 'Malgun Gothic', sans-serif; background-color: #f4f7f9; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
         
-        /* 첫 화면: 사업장 선택 */
-        #selection-page { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center; }
-        .select-card { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 400px; }
-        .styled-select { width: 100%; padding: 12px; font-size: 16px; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 20px; }
-        .start-btn { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        /* [1페이지] 선택 화면 스타일 */
+        #selection-page { display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; text-align: center; }
+        .logo-area { margin-bottom: 40px; }
+        .logo-main { font-size: 36px; font-weight: bold; color: #0066ff; letter-spacing: 1px; }
+        .logo-sub { font-size: 20px; color: #333; margin-top: 10px; font-weight: bold; }
+        .select-card { background: white; padding: 50px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); width: 450px; }
+        .card-title { font-size: 18px; margin-bottom: 25px; color: #444; font-weight: bold; }
+        .styled-select { width: 100%; padding: 15px; font-size: 16px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 25px; background: #fff; cursor: pointer; }
+        .start-btn { width: 100%; padding: 15px; background: #0052cc; color: white; border: none; border-radius: 10px; font-size: 17px; font-weight: bold; cursor: pointer; }
 
-        /* 메인 화면: 교육일지 */
-        #report-page { display: none; padding: 20px; }
-        .container { max-width: 850px; margin: 0 auto; border: 1px solid #000; padding: 40px; background: #fff; }
+        /* [2페이지] 일지 화면 스타일 (초기엔 숨김) */
+        #report-page { display: none; padding: 30px; }
+        .container { max-width: 850px; margin: 0 auto; border: 2px solid #333; padding: 40px; background: #fff; }
         
-        .no-print { display: flex; justify-content: space-between; max-width: 850px; margin: 0 auto 20px auto; }
-        .back-btn { background: #6c757d; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; }
-        .print-btn { background: #28a745; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; font-weight: bold; }
+        .no-print { display: flex; justify-content: space-between; max-width: 850px; margin: 0 auto 25px auto; }
+        .back-btn { background: #eeeeee; color: #333; border: 1px solid #ccc; padding: 10px 20px; cursor: pointer; border-radius: 5px; font-weight: bold; }
+        .print-btn { background: #0052cc; color: white; border: none; padding: 10px 25px; cursor: pointer; border-radius: 5px; font-weight: bold; }
 
-        h1 { text-align: center; text-decoration: underline; margin-bottom: 30px; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
-        th, td { border: 1px solid #000; padding: 10px; text-align: center; font-size: 14px; height: 25px; }
-        th { background-color: #f2f2f2; width: 120px; }
+        /* 표 및 서식 스타일 */
+        h1 { text-align: center; text-decoration: underline; margin-bottom: 30px; font-size: 26px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+        th, td { border: 1px solid #333; padding: 10px; text-align: center; font-size: 14px; }
+        th { background-color: #f9f9f9; font-weight: bold; }
+        input[type="text"], input[type="number"], input[type="date"], input[type="time"] { width: 95%; border: 1px solid #eee; padding: 5px; font-size: 14px; text-align: center; }
+        .content-box { border: 2px solid #333; padding: 20px; text-align: left; font-size: 14px; margin: 20px 0; min-height: 150px; }
         
-        input { width: 95%; border: 1px solid #eee; padding: 5px; font-family: inherit; }
-        .content-box { border: 1px solid #000; padding: 15px; text-align: left; font-size: 14px; margin-bottom: 20px; }
-
-        /* 인쇄 설정 */
         @media print {
             .no-print { display: none !important; }
-            body { background: none; }
-            .container { border: none !important; width: 100%; padding: 0; margin: 0; }
-            input { border: none !important; } /* 인쇄 시 테두리 제거 */
-            #targetSiteName { color: black !important; font-weight
+            body { background: white; }
+            .container { border: none !important; width: 100%; padding: 0; }
+            input { border: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="selection-page">
+    <div class="logo-area">
+        <div class="logo-main">WILL & VISION</div>
+        <div class="logo-sub">안전보건 관리 시스템</div>
+    </div>
+    <div class="select-card">
+        <div class="card-title">담당 사업장을 선택하세요</div>
+        <select id="siteInput" class="styled-select">
+            <option value="">-- 사업장 목록 --</option>
+            <option value="SK-C타워">SK-C타워</option>
+            <option value="윌앤비전 본사">윌앤비전 본사</option>
+            <option value="영등포 사업장">영등포 사업장</option>
+            <option value="당산동 관리단지">당산동 관리단지</option>
+        </select>
+        <button class="start-btn" onclick="goToReport()">교육일지 작성하기</button>
+    </div>
+</div>
+
+<div id="report-page">
+    <div class="no-print">
+        <button class="back-btn" onclick="goToStart()">◀ 이전으로</button
