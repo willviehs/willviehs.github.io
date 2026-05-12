@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>카테고리 선택 - 안전관리 시스템</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="logo-main" id="siteTitle"></div>
+    <div class="logo-sub">관리 항목을 선택하세요</div>
+
+    <div class="category-grid">
+        <div class="category-item" onclick="location.href='notice.html'">게시판 게시 서류</div>
+        <div class="category-item" onclick="location.href='manual.html'">절차서 및 지침서</div>
+        <div class="category-item" onclick="location.href='edu_list.html'">안전보건교육</div>
+        <div class="category-item" onclick="location.href='risk.html'">위험성평가</div>
+        <div class="category-item" onclick="location.href='msds.html'">물질안전보건자료(MSDS)</div>
+        <div class="category-item" onclick="location.href='ergonomics.html'">근골격계 유해요인조사</div>
+        <div class="category-item" onclick="location.href='signs.html'">안전보건표지</div>
+        <div class="category-item" onclick="location.href='posters.html'">안전보건 포스터</div>
+    </div>
+
+    <script>
+        // 저장된 사업장명 불러오기
+        const site = localStorage.getItem('selectedSite');
+        document.getElementById('siteTitle').innerText = site || "WILL & VISION";
+    </script>
+</body>
+</html>
