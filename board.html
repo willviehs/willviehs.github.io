@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>안전관리 게시판</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .board-container { max-width: 1000px; margin: 40px auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .board-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #0052cc; padding-bottom: 15px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border-bottom: 1px solid #eee; padding: 15px; text-align: center; }
+        .btn-add { background: #0052cc; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="board-container">
+        <div class="board-header">
+            <h2 id="boardTitle">게시판</h2>
+            <button class="btn-add" onclick="goToWrite()">➕ 새 일지 업로드</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>날짜</th>
+                </tr>
+            </thead>
+            <tbody id="listBody">
+                </tbody>
+        </table>
+        <button onclick="location.href='index.html'" style="margin-top:20px;">🏠 메인으로</button>
+    </div>
+
+    <script>
+        // URL에서 카테고리 이름을 가져와서 제목을 바꿉니다.
+        const params = new URLSearchParams(window.location.search);
+        const cat = params.get('cat');
+        const titles = { 'edu': '📝 안전보건교육', 'committee': '🤝 산업안전보건위원회', 'check': '📋 안전점검' };
+        document.getElementById('boardTitle').innerText = titles[cat] || '관리 게시판';
+
+        function goToWrite() {
+            location.href = `write_form.html?cat=${cat}`;
+        }
+        
+        // 로컬스토리지에서 저장된 글 목록 불러오기 (간이 DB 역할)
+        const savedPosts = JSON.parse(localStorage.getItem(`posts_${cat}`)) || [];
+        const listBody = document.getElementById('listBody');
+        if(savedPosts.length === 0) {
+            listBody.innerHTML = '<tr><td colspan="4">등록된 게시물이 없습니다.</td></tr>';
+        } else {
+            savedPosts.forEach((post, index) => {
+                listBody.innerHTML += `<tr><td>${index+1}</td><td>${post.title}</td><td>${post.author}</td><td>${post.date}</td></tr>`;
+            });
+        }
+    </script>
+</body>
+</html>
