@@ -1,28 +1,26 @@
-/* 공통 디자인 */
-body { font-family: 'Malgun Gothic', sans-serif; background-color: #f0f2f5; margin: 0; }
-.logo-main { font-size: 38px; font-weight: bold; color: #0052cc; text-align: center; margin-top: 50px; }
-.logo-sub { font-size: 18px; color: #555; text-align: center; margin-bottom: 30px; }
+/* 공통 스타일 */
+body { font-family: 'Malgun Gothic', sans-serif; margin: 0; background-color: #f8f9fa; color: #333; }
+a { text-decoration: none; color: inherit; }
 
-/* 카드 및 버튼 */
-.select-card { 
-    background: white; padding: 40px; border-radius: 20px; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 450px; 
-    margin: 0 auto; text-align: center; 
-}
-.styled-select { width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 25px; }
-.start-btn { 
-    width: 100%; padding: 18px; background: #0052cc; color: white; 
-    border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; 
-}
-.start-btn:hover { background: #0041a3; }
+/* 상단 네비게이션 바 (공제회 스타일) */
+.navbar { background: #fff; border-bottom: 2px solid #0052cc; padding: 0 50px; display: flex; justify-content: space-between; align-items: center; height: 80px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.logo { font-size: 24px; font-weight: bold; color: #0052cc; }
+.nav-menu { display: flex; gap: 20px; }
+.nav-item { font-size: 14px; font-weight: bold; padding: 10px; cursor: pointer; transition: 0.3s; }
+.nav-item:hover { color: #0052cc; border-bottom: 2px solid #0052cc; }
 
-/* 카테고리 메뉴 전용 */
-.category-grid { 
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-    gap: 20px; padding: 40px; max-width: 1000px; margin: 0 auto; 
-}
-.category-item { 
-    background: white; padding: 30px; border-radius: 15px; text-align: center; 
-    cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.05); font-weight: bold;
-}
-.category-item:hover { background: #0052cc; color: white; }
+/* 메인 대시보드 */
+.container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+.main-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.card { background: #fff; padding: 30px; border-radius: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid #eee; }
+.card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-color: #0052cc; }
+.card i { font-size: 40px; color: #0052cc; margin-bottom: 15px; display: block; }
+.card-title { font-weight: bold; font-size: 16px; margin-bottom: 10px; }
+.card-desc { font-size: 12px; color: #888; }
+
+/* 게시판 스타일 */
+.board-box { background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+th, td { border-bottom: 1px solid #eee; padding: 15px; text-align: center; font-size: 14px; }
+th { background: #fdfdfd; font-weight: bold; border-top: 2px solid #333; }
+.btn-primary { background: #0052cc; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
