@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>안전보건교육 게시판</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .board-container { max-width: 1000px; margin: 40px auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .board-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #0052cc; padding-bottom: 15px; }
+        .btn-write { background: #0052cc; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border-bottom: 1px solid #eee; padding: 15px; text-align: center; }
+        th { background: #f8f9fa; color: #333; font-weight: bold; }
+        /* 모달 스타일 */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; }
+        .modal-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 15px; width: 400px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="board-container">
+        <div class="board-header">
+            <h2>📁 안전보건교육 게시판 (<span id="siteDisplay"></span>)</h2>
+            <button class="btn-write" onclick="openModal()">➕ 새 교육일지 작성</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 10%;">번호</th>
+                    <th style="width: 20%;">교육구분</th>
+                    <th>제목 (교육 주제)</th>
+                    <th style="width: 20%;">작성일</th>
+                </tr>
+            </thead>
+            <tbody id="boardList">
+                <tr><td colspan="4" style="color: #999;">등록된 게시물이 없습니다.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="typeModal" class="modal">
+        <div class="modal-content">
+            <h3>작성할 서식을 선택하세요</h3>
+            <select id="eduSelect" class="styled-select" style="margin-bottom: 20px;">
+                <option value="정기">근로자 정기교육일지</option>
+                <option value="채용">근로자 채용시 교육일지</option>
+                <option value="변경">작업내용 변경 시 교육일지</option>
+                <option value="관리정기">관리감독자 정기 교육일지</option>
+                <option value="MSDS">물질안전보건자료(MSDS) 교육일지</option>
+                <option value="특별공통">특별안전보건교육(공통)</option>
+                <option value="특별용접">특별안전보건교육(용접)</option>
+            </select>
+            <button class="start-btn" onclick="startWrite()">작성 시작</button>
+            <button onclick="closeModal()" style="margin-top:10px; background:none; border:none; color:#999; cursor:pointer;">닫기</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('siteDisplay').innerText = localStorage.getItem('selectedSite') || "미선택";
+        function openModal() { document.getElementById('typeModal').style.display = 'block'; }
+        function closeModal() { document.getElementById('typeModal').style.display = 'none'; }
+        function startWrite() {
+            const selected = document.getElementById('eduSelect').value;
+            localStorage.setItem('currentEduType', selected);
+            window.location.href = 'write_form.html';
+        }
+    </script>
+</body>
+</html>
